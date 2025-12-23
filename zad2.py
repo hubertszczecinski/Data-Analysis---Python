@@ -2,7 +2,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
+import os
 
+
+PLOTS_DIR = "plots"
+os.makedirs(PLOTS_DIR, exist_ok=True)
 
 file_path = input("Podaj ścieżkę do pliku z danymi (np. /.../.../.../.././data2.csv): ")
 
@@ -44,6 +48,8 @@ def plot_wcss(results):
     plt.ylabel('WCSS')
     plt.title('Wykres zależności WCSS od liczby klastrów')
     plt.grid(True, linestyle='--', alpha=1)
+    plt.tight_layout()
+    plt.savefig(os.path.join(PLOTS_DIR, "zad2_wcss_vs_k.png"), dpi=300, bbox_inches="tight")
     plt.show()
 
 
@@ -60,6 +66,8 @@ def plot_iterations(results):
     plt.ylabel('Liczba iteracji')
     plt.title('Wykres zależności liczby iteracji od liczby klastrów')
     plt.grid(True, linestyle='--', alpha=1)
+    plt.tight_layout()
+    plt.savefig(os.path.join(PLOTS_DIR, "zad2_iterations_vs_k.png"), dpi=300, bbox_inches="tight")
     plt.show()
 
 
@@ -108,6 +116,7 @@ axs[2, 1].set_xlabel('Długość płatka [cm]')
 axs[2, 1].set_ylabel('Szerokość płatka [cm]')
 
 plt.tight_layout()
+fig.savefig(os.path.join(PLOTS_DIR, "zad2_clusters_grid.png"), dpi=300, bbox_inches="tight")
 plt.show()
 
 

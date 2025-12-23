@@ -1,6 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import os
+
+PLOTS_DIR = "plots"
+os.makedirs(PLOTS_DIR, exist_ok=True)
 
 file_path = input("Podaj ścieżkę do pliku z danymi (np. /.../.../.../.././data1.csv): ")
 column_names = ["sepal_length", "sepal_width", "petal_length", "petal_width", "species"]
@@ -153,7 +157,7 @@ def setBins(start, koniec):
     return bb
 
 # Definicja histogramu
-def histogram(data1, kolumna, osX, osY, tytul, start, koniec, maksY):
+def histogram(data1, kolumna, osX, osY, tytul, start, koniec, maksY, filename):
     lista = [float(row[kolumna]) for row in data1]
 
     bleble = setBins(start, koniec)
@@ -168,33 +172,37 @@ def histogram(data1, kolumna, osX, osY, tytul, start, koniec, maksY):
 
     #Tworzenie histo
     plt.hist(lista, bins=bleble, edgecolor='black')
+    plt.tight_layout()
+    plt.savefig(os.path.join(PLOTS_DIR, filename), dpi=300, bbox_inches="tight")
     plt.show()
 
 
-def Pudelkowy(y_column, title):
+def Pudelkowy(y_column, title, filename):
     plt.figure(figsize=(10, 10))
     data.boxplot(column=y_column, by='species', grid=False, patch_artist=True, boxprops=dict(facecolor='lightblue', alpha=0.6))
     plt.ylabel("Wartość (cm)", fontweight="bold")
     plt.xlabel("Gatunek", fontweight="bold")
     plt.title(title, fontweight="bold")
+    plt.tight_layout()
+    plt.savefig(os.path.join(PLOTS_DIR, filename), dpi=300, bbox_inches="tight")
     plt.show()
 
 
-histogram(data.values, 0, "Długość (cm)", "Liczebność", "Histogram Długości Działki Kielicha", 4.0, 8.0, 40)
-histogram(data.values, 1, "Szerokość (cm)", "Liczebność", "Histogram Szerokości Działki Kielicha", 2.0, 4.5, 70)
-histogram(data.values, 2, "Długość (cm)", "Liczebność", "Histogram Długości Płatka", 1.0, 7.0, 30)
-histogram(data.values, 3, "Szerokość (cm)", "Liczebność", "Histogram Szerokości Płatka", 0.0, 2.5, 50)
+histogram(data.values, 0, "Długość (cm)", "Liczebność", "Histogram Długości Działki Kielicha", 4.0, 8.0, 40, "zad1_hist_sepal_length.png")
+histogram(data.values, 1, "Szerokość (cm)", "Liczebność", "Histogram Szerokości Działki Kielicha", 2.0, 4.5, 70, "zad1_hist_sepal_width.png")
+histogram(data.values, 2, "Długość (cm)", "Liczebność", "Histogram Długości Płatka", 1.0, 7.0, 30, "zad1_hist_petal_length.png")
+histogram(data.values, 3, "Szerokość (cm)", "Liczebność", "Histogram Szerokości Płatka", 0.0, 2.5, 50, "zad1_hist_petal_width.png")
 
 
 # Wykresy pudełkowe wywołane z podziałem na gatunki.
-Pudelkowy("sepal_length", "Wykres Pudełkowy Długości Działki Kielicha")
-Pudelkowy("sepal_width", "Wykres Pudełkowy Szerokości Działki Kielicha")
-Pudelkowy("petal_length", "Wykres Pudełkowy Długości Płatka")
-Pudelkowy("petal_width", "Wykres Pudełkowy Szerokości Płatka")
+Pudelkowy("sepal_length", "Wykres Pudełkowy Długości Działki Kielicha", "zad1_box_sepal_length.png")
+Pudelkowy("sepal_width", "Wykres Pudełkowy Szerokości Działki Kielicha", "zad1_box_sepal_width.png")
+Pudelkowy("petal_length", "Wykres Pudełkowy Długości Płatka", "zad1_box_petal_length.png")
+Pudelkowy("petal_width", "Wykres Pudełkowy Szerokości Płatka", "zad1_box_petal_width.png")
 
 
 # Funkcja wykresów regresji
-def scatter_with_regression(x_column, y_column, title_prefix):
+def scatter_with_regression(x_column, y_column, title_prefix, filename):
     # Kolumny danych na listy
     x = data[x_column].tolist()
     y = data[y_column].tolist()
@@ -225,13 +233,14 @@ def scatter_with_regression(x_column, y_column, title_prefix):
     plt.xlabel(f"{x_column.replace('_', ' ').capitalize()} (cm)")
     plt.ylabel(f"{y_column.replace('_', ' ').capitalize()} (cm)")
     plt.title(f"{title_prefix} (r = {correlation:.2f}, y = {slope_str}x {intercept_str})")
-
+    plt.tight_layout()
+    plt.savefig(os.path.join(PLOTS_DIR, filename), dpi=300, bbox_inches="tight")
     plt.show()
 
 # Wywołanie wykresów
-scatter_with_regression('sepal_length', 'sepal_width', 'Sepal Length vs Sepal Width')
-scatter_with_regression('sepal_length', 'petal_length', 'Sepal Length vs Petal Length')
-scatter_with_regression('sepal_length', 'petal_width', 'Sepal Length vs Petal Width')
-scatter_with_regression('sepal_width', 'petal_length', 'Sepal Width vs Petal Length')
-scatter_with_regression('sepal_width', 'petal_width', 'Sepal Width vs Petal Width')
-scatter_with_regression('petal_length', 'petal_width', 'Petal Length vs Petal Width')
+scatter_with_regression('sepal_length', 'sepal_width', 'Sepal Length vs Sepal Width', "zad1_scatter_sepal_length_vs_sepal_width.png")
+scatter_with_regression('sepal_length', 'petal_length', 'Sepal Length vs Petal Length', "zad1_scatter_sepal_length_vs_petal_length.png")
+scatter_with_regression('sepal_length', 'petal_width', 'Sepal Length vs Petal Width', "zad1_scatter_sepal_length_vs_petal_width.png")
+scatter_with_regression('sepal_width', 'petal_length', 'Sepal Width vs Petal Length', "zad1_scatter_sepal_width_vs_petal_length.png")
+scatter_with_regression('sepal_width', 'petal_width', 'Sepal Width vs Petal Width', "zad1_scatter_sepal_width_vs_petal_width.png")
+scatter_with_regression('petal_length', 'petal_width', 'Petal Length vs Petal Width', "zad1_scatter_petal_length_vs_petal_width.png")

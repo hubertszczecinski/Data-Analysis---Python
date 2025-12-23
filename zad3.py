@@ -4,8 +4,11 @@ import pandas as pd
 from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import MinMaxScaler
+import os
 
 
+PLOTS_DIR = "plots"
+os.makedirs(PLOTS_DIR, exist_ok=True)
 
 # inputData
 column_names = ["sepalLength", "sepalWidth", "petalLength", "petalWidth", "species"]
@@ -90,6 +93,8 @@ plt.ylabel('Dokładność')
 plt.xticks(outputData['k_value'])
 plt.ylim(zaokraglenie_min(outputData), zaokraglenie_max(outputData))
 plt.yticks(np.arange(zaokraglenie_min(outputData), zaokraglenie_max(outputData), 0.01))
+plt.tight_layout()
+plt.savefig(os.path.join(PLOTS_DIR, "zad3_accuracy_all_features.png"), dpi=300, bbox_inches="tight")
 plt.show()
 
 # najlepsze k dla wszystkich cech
@@ -121,6 +126,8 @@ plt.ylabel('Dokładność')
 plt.xticks(SepalWidth_SepalLength['k_value'])
 plt.ylim(zaokraglenie_min(SepalWidth_SepalLength), zaokraglenie_max(SepalWidth_SepalLength))
 plt.yticks(np.arange(zaokraglenie_min(SepalWidth_SepalLength), zaokraglenie_max(SepalWidth_SepalLength), 0.01))
+plt.tight_layout()
+plt.savefig(os.path.join(PLOTS_DIR, "zad3_accuracy_sepal_width_sepal_length.png"), dpi=300, bbox_inches="tight")
 plt.show()
 print("cechy: sepalWidth, sepalLength \n", Macierz_bledu(SepalWidth_SepalLength, 1, 0), "\n")
 
@@ -135,6 +142,8 @@ plt.ylabel('Dokładność')
 plt.xticks(PetalLength_SepalLenght['k_value'])
 plt.ylim(zaokraglenie_min(PetalLength_SepalLenght), zaokraglenie_max(PetalLength_SepalLenght))
 plt.yticks(np.arange(zaokraglenie_min(PetalLength_SepalLenght), zaokraglenie_max(PetalLength_SepalLenght), 0.01))
+plt.tight_layout()
+plt.savefig(os.path.join(PLOTS_DIR, "zad3_accuracy_petal_length_sepal_length.png"), dpi=300, bbox_inches="tight")
 plt.show()
 print("cechy: petalLength, sepalLength \n", Macierz_bledu(PetalLength_SepalLenght, 2, 0), "\n")
 
@@ -149,6 +158,8 @@ plt.ylabel('Dokładność')
 plt.xticks(PetalWidth_SepalLength['k_value'])
 plt.ylim(zaokraglenie_min(PetalWidth_SepalLength), zaokraglenie_max(PetalWidth_SepalLength))
 plt.yticks(np.arange(zaokraglenie_min(PetalWidth_SepalLength), zaokraglenie_max(PetalWidth_SepalLength), 0.01))
+plt.tight_layout()
+plt.savefig(os.path.join(PLOTS_DIR, "zad3_accuracy_petal_width_sepal_length.png"), dpi=300, bbox_inches="tight")
 plt.show()
 print("cechy: petalWidth, sepalLength \n", Macierz_bledu(PetalWidth_SepalLength, 3, 0), "\n")
 
@@ -163,6 +174,8 @@ plt.ylabel('Dokładność')
 plt.xticks(PetalLength_SepalWidth['k_value'])
 plt.ylim(zaokraglenie_min(PetalLength_SepalWidth), zaokraglenie_max(PetalLength_SepalWidth))
 plt.yticks(np.arange(zaokraglenie_min(PetalLength_SepalWidth), zaokraglenie_max(PetalLength_SepalWidth), 0.01))
+plt.tight_layout()
+plt.savefig(os.path.join(PLOTS_DIR, "zad3_accuracy_petal_length_sepal_width.png"), dpi=300, bbox_inches="tight")
 plt.show()
 
 print("cechy: petalLength, sepalWidth \n", Macierz_bledu(PetalLength_SepalWidth, 2, 1), "\n")
@@ -178,6 +191,8 @@ plt.ylabel('Dokładność')
 plt.xticks(PetalWidth_SepalWidth['k_value'])
 plt.ylim(zaokraglenie_min(PetalWidth_SepalWidth), zaokraglenie_max(PetalWidth_SepalWidth))
 plt.yticks(np.arange(zaokraglenie_min(PetalWidth_SepalWidth), zaokraglenie_max(PetalWidth_SepalWidth), 0.01))
+plt.tight_layout()
+plt.savefig(os.path.join(PLOTS_DIR, "zad3_accuracy_petal_width_sepal_width.png"), dpi=300, bbox_inches="tight")
 plt.show()
 print("cechy: petalWidth, sepalWidth \n", Macierz_bledu(PetalWidth_SepalWidth, 1, 3), "\n")
 
@@ -192,6 +207,8 @@ plt.ylabel('Dokładność')
 plt.xticks(PetalWidth_PetalLength['k_value'])
 plt.ylim(zaokraglenie_min(PetalWidth_PetalLength), zaokraglenie_max(PetalWidth_PetalLength))
 plt.yticks(np.arange(zaokraglenie_min(PetalWidth_PetalLength), zaokraglenie_max(PetalWidth_PetalLength), 0.01))
+plt.tight_layout()
+plt.savefig(os.path.join(PLOTS_DIR, "zad3_accuracy_petal_width_petal_length.png"), dpi=300, bbox_inches="tight")
 plt.show()
 print("cechy: petalWidth, petalLength \n", Macierz_bledu(PetalWidth_PetalLength, 3, 2), "\n")
 
